@@ -9,14 +9,25 @@ body,
 }
 
 .SearchBar {
-  display: flex;
+  /* display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  flex-direction: column; */
+  width: 400px;
+
+  border: black solid;
 }
 
 .options-dropdown {
   border: solid black;
-  max-height: 400px;
+  max-height: 200px;
   overflow: scroll;
+}
+
+.input-section {
+  padding: 10px;
+  border: solid black;
+  display: flex;
+  justify-content: space-evenly;
+  position: static;
 }
