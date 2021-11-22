@@ -14,3 +14,7 @@ body,
   align-items: center;
   height: 100%;
 }
+
+.options-dropdown {
+  border: solid black;
+}

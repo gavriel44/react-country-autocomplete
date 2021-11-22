@@ -7,7 +7,15 @@ export default function OptionsDropdown(props) {
   return (
     <div className="options-dropdown">
       {optionsJson.map((country) => {
-        return <Option country={country} />;
+        return (
+          <Option
+            key={country.name}
+            onClick={() => {
+              props.clickHandler(country.name);
+            }}
+            country={country}
+          />
+        );
       })}
     </div>
   );

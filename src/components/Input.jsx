@@ -8,7 +8,7 @@ export default function Input(props) {
         value={props.value}
         onChange={props.onChange}
         onBlur={props.onBlur}
-        onFocus={props.onFocus}
+        onMouseDown={props.onMouseDown}
       />
     </div>
   );

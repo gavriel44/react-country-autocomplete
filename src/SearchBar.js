@@ -19,40 +19,59 @@ function reducer(state, action) {
 
 function SearchBar() {
   const [optionsDisplay, dispatch] = useReducer(reducer, { display: "none" });
-  const optionsElement = useRef(null);
+  const filterReference = useRef(null);
   const [value, setValue] = useState("");
   const [filteredOptions, setFilteredOptions] = useState(countriesJson);
 
   useEffect(() => {
     const searchResult = countriesJson.filter((country) => {
-      if (country.name.toLocaleLowerCase().includes(value)) {
+      if (
+        country.name.toLocaleLowerCase().includes(value.toLocaleLowerCase())
+      ) {
         return true;
       }
       return false;
     });
-    setFilteredOptions(searchResult);
+    console.log("ref", filterReference.current);
+    if (!filterReference.current) {
+      setFilteredOptions(searchResult);
+    } else {
+      setFilteredOptions(countriesJson);
+    }
   }, [value]);
 
   function handleChange(e) {
+    filterReference.current = false;
     setValue(e.target.value);
     dispatch({ type: "show" });
+  }
+
+  function clickHandler(value) {
+    filterReference.current = true;
+    setValue(value);
+    dispatch({ type: "hide" });
+    setFilteredOptions(countriesJson);
   }
 
   return (
     <div className="SearchBar">
       <Input
         value={value}
+        onMouseDown={() => {
+          dispatch({ type: "show" });
+        }}
         onChange={handleChange}
         onBlur={() => {
+          console.log("blur");
           dispatch({ type: "hide" });
-        }}
-        onFocus={() => {
-          dispatch({ type: "show" });
         }}
       />
 
       <div style={optionsDisplay}>
-        <OptionsDropdown optionsJson={filteredOptions} />
+        <OptionsDropdown
+          optionsJson={filteredOptions}
+          clickHandler={clickHandler}
+        />
       </div>
       <button
         onClick={() => {
