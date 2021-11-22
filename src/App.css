@@ -1,0 +1,16 @@
+html,
+body,
+#root {
+  height: 100%;
+}
+
+.input {
+  width: 200px;
+}
+
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
