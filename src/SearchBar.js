@@ -1,4 +1,4 @@
-import "./App.css";
+import "./SearchBar.css";
 import Input from "./components/Input";
 import OptionsDropdown from "./components/OptionsDropdown";
 import { useRef, useEffect, useState, useReducer } from "react";
@@ -17,10 +17,9 @@ function reducer(state, action) {
   }
 }
 
-function App() {
+function SearchBar() {
   const [optionsDisplay, dispatch] = useReducer(reducer, { display: "none" });
   const optionsElement = useRef(null);
-  const [isShowOptions, setIsShowOptions] = useState("none");
   const [value, setValue] = useState("");
   const [filteredOptions, setFilteredOptions] = useState(countriesJson);
 
@@ -40,7 +39,7 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="SearchBar">
       <Input
         value={value}
         onChange={handleChange}
@@ -58,7 +57,6 @@ function App() {
       <button
         onClick={() => {
           console.log("tes");
-          setIsShowOptions("none");
         }}
       >
         test
@@ -67,4 +65,4 @@ function App() {
   );
 }
 
-export default App;
+export default SearchBar;
