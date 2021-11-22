@@ -3,82 +3,78 @@ import Input from "./components/Input";
 import OptionsDropdown from "./components/OptionsDropdown";
 import { useRef, useEffect, useState, useReducer } from "react";
 import countriesJson from "./countries";
-
-function reducer(state, action) {
-  switch (action.type) {
-    case "show":
-      return { display: "" };
-
-    case "hide":
-      return { display: "none" };
-
-    default:
-      break;
-  }
-}
+import useFilteredJson from "./components/useFilteredJson";
 
 function SearchBar() {
-  const [optionsDisplay, dispatch] = useReducer(reducer, { display: "none" });
-  const filterReference = useRef(null);
+  const dropdownElementRef = useRef(null);
+  const inputElementRef = useRef(null);
   const [value, setValue] = useState("");
-  const [filteredOptions, setFilteredOptions] = useState(countriesJson);
+  const [filteredCountries, setFilteredCountries] = useFilteredJson(
+    value,
+    countriesJson
+  );
 
   useEffect(() => {
-    const searchResult = countriesJson.filter((country) => {
-      if (
-        country.name.toLocaleLowerCase().includes(value.toLocaleLowerCase())
-      ) {
-        return true;
-      }
-      return false;
-    });
-    console.log("ref", filterReference.current);
-    if (!filterReference.current) {
-      setFilteredOptions(searchResult);
-    } else {
-      setFilteredOptions(countriesJson);
-    }
-  }, [value]);
+    dropdownElementRef.current.style.display = "none";
+  }, []);
 
   function handleChange(e) {
-    filterReference.current = false;
     setValue(e.target.value);
-    dispatch({ type: "show" });
+    dropdownElementRef.current.style.display = "";
   }
 
   function clickHandler(value) {
-    filterReference.current = true;
     setValue(value);
-    dispatch({ type: "hide" });
-    setFilteredOptions(countriesJson);
+    dropdownElementRef.current.style.display = "none";
+
+    setTimeout(() => {
+      setFilteredCountries(countriesJson);
+    }, 20);
   }
 
   return (
     <div className="SearchBar">
       <Input
+        inputRef={inputElementRef}
         value={value}
         onMouseDown={() => {
-          dispatch({ type: "show" });
+          dropdownElementRef.current.style.display = "";
         }}
         onChange={handleChange}
         onBlur={() => {
           console.log("blur");
-          dispatch({ type: "hide" });
+          dropdownElementRef.current.style.display = "none";
+          setFilteredCountries(countriesJson);
         }}
       />
 
-      <div style={optionsDisplay}>
+      <div ref={dropdownElementRef}>
         <OptionsDropdown
-          optionsJson={filteredOptions}
+          optionsJson={filteredCountries}
           clickHandler={clickHandler}
         />
       </div>
+      {value === "" ? null : (
+        <button
+          onClick={() => {
+            clickHandler("");
+          }}
+          onMouseDown={(e) => {
+            e.preventDefault();
+          }}
+        >
+          X
+        </button>
+      )}
       <button
         onClick={() => {
-          console.log("tes");
+          const currentDisplay = dropdownElementRef.current.style.display;
+          dropdownElementRef.current.style.display =
+            currentDisplay === "" ? "none" : "";
+          inputElementRef.current.focus();
         }}
       >
-        test
+        Toggle
       </button>
     </div>
   );

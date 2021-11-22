@@ -17,4 +17,6 @@ body,
 
 .options-dropdown {
   border: solid black;
+  max-height: 400px;
+  overflow: scroll;
 }

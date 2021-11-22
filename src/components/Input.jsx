@@ -9,6 +9,7 @@ export default function Input(props) {
         onChange={props.onChange}
         onBlur={props.onBlur}
         onMouseDown={props.onMouseDown}
+        ref={props.inputRef}
       />
     </div>
   );
