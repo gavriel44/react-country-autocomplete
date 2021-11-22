@@ -4,7 +4,12 @@ import Form from "react-bootstrap/Form";
 export default function Input(props) {
   return (
     <div className="input">
-      <Form.Control value={props.value} onChange={props.onChange} />
+      <Form.Control
+        value={props.value}
+        onChange={props.onChange}
+        onBlur={props.onBlur}
+        onFocus={props.onFocus}
+      />
     </div>
   );
 }

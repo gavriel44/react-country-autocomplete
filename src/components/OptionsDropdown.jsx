@@ -1,21 +1,13 @@
 import React from "react";
-import countriesJson from "./countries";
+import Option from "./Option";
 
 export default function OptionsDropdown(props) {
-  const query = props.query;
-  const searchResult = countriesJson.filter((country) => {
-    if (country.name.toLocaleLowerCase().includes(query)) {
-      return true;
-    }
-    return false;
-  });
+  const optionsJson = props.optionsJson;
 
   return (
-    <div>
-      {searchResult.map((country) => {
-        return (
-          <div className="option">{country.name + ": " + country.code}</div>
-        );
+    <div className="options-dropdown">
+      {optionsJson.map((country) => {
+        return <Option country={country} />;
       })}
     </div>
   );
